@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="js/external/jquery-1.11.1.min.js" ></script>
+	<script src="js/external/underscore.js" ></script>
+	<script src="js/external/backbone.js" ></script>
+	<script src="js/backbone.localStorage-min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/service.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<title>My App</title>
+</head>
+<body>
+<div id="appHead"></div>
+<div id="todoApp">
+	<!-- Div for Todo title input and view containment -->
+	<div id="todoMain"></div>
+	<!-- Div for viewing todo items -->
+	<div id="todoView"></div>
+	<!-- Div for viewing finished todo items -->
+	<div id="todoFinished"></div>
+</div>
+<div id="progressBar">
+</div>
+
+<!-- Todo header -->
+<script type="text/template" id="todoHeader">
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href"#">Todo Project v2.0</a>
+			</div>
+			<form class="navbar-form navbar-right">
+				<a id="localStorBtn" class="btn btn-default" href="#">Export</a>
+				<span class="btn btn-default btn-file">
+					Import<input id="fileUpload" type="file">
+				</span>
+				<button id="appClearer" type="button" class="btn btn-default navbar-btn">Clear all!</button>
+			</form>
+		</div>
+	</nav>
+</script>
+
+<!-- Objective list -->
+<script type="text/template" id="todoSpawner">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Objectives</h3>
+		</div>
+		<div class="panel-body">
+			<div class="input-group">
+				<input class="form-control" type="text" id="inputText" placeholder="Press enter or button to insert">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" id="addDiv">+</button>
+				</span>
+			</div>
+		</div>
+	</div>
+</script>
+
+<!-- Todo titles -->
+<script type="text/template" id="spawneddiv">
+	<div class="panel-heading">
+		<h3 class="panel-title"><%= title %></h3>
+	</div>
+</script>
+
+<!-- Todo input -->
+<script type="text/temple" id="todoinput">
+<div class="panel-body">
+	<div class="input-group">
+		<input class="form-control" type="text" id="inputLi">
+		<div class="input-group-btn" role="group">
+			<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a id="edit">Edit</a></li>
+				<li><a id="remove">Remove</a></li>
+			</ul>
+			<button class="inputbutton btn btn-default">+</button>
+		</div>
+	</div>
+</div>
+</script>
+
+
+<!-- Todo list -->
+<script type="text/template" id="todoTable">
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+			<h3 class="panel-title">Todo list</h3>
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped">
+				<tbody id="mainTable"></tbody>
+			</table>
+		</div>
+	</div>
+</script>
+
+<!-- Item buttons -->
+<script type="text/template" id="itembuttons">
+<td>
+	<%= input %>
+	<div class="btn-group" role="group">
+		<div class="btn-group" role="group">
+			<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a class="editbtn">Edit</a></li>
+				<li><a class="removebtn">Remove</a></li>
+			</ul>
+		</div>
+		<button class="finishbtn btn btn-default">
+			<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		</button>
+	</div>
+</td>
+</script>
+
+<script type="text/template" id="todoReplace">
+	<div class="input-group">
+		<input class="<%= replaceinptclass %> form-control" type="text">
+		<span class="input-group-btn">
+			<button class="<%= replacebtnclass %> btn btn-default" type="button">+</button>
+		</span>
+	</div>
+</script>
+
+<!-- Finish button -->
+<script type="text/template" id="finishedBtn">
+	<button class="btn btn-success finisherBtn">Finished 
+		<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+	</button>
+</script>
+
+<!-- Finished list -->
+<script type="text/template" id="todoFinishedList">
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<h3 class="panel-title">Finished lists</h3>
+		</div>
+		<div class="panel-body" id="finishedPanel"></div>
+	</div>
+</script>
+
+<!-- Progress bar -->
+<script type="text/template" id="todoProgressBar">
+	<p>Progress:</p>
+	<div class="progress">
+		<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" 
+		aria-valuenow="<%= num %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= num %>%;">
+			<%= num %>%
+		</div>
+	</div>
+</script>
+</body>
+</html>
