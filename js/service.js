@@ -320,6 +320,11 @@ $(document).ready(function() {
 		finishBtn: function(){
 			console.log("made it to finish btn");
 			this.$el.find(".input-group-btn").append(this.finishedTemplate());
+		},
+		
+		finishBtnRemove: function(){
+			console.log("detaching");
+			this.$el.find(".finisherBtn").remove();
 		}
 	});
 
@@ -398,6 +403,8 @@ $(document).ready(function() {
 			$("#mainTable").append(myListItemRow.render().el);
 
 			$("#inputLi").val("");
+			
+			this.checkCompleted();
 			return this;
 		},
 
@@ -463,6 +470,7 @@ $(document).ready(function() {
 			var completedarray = myTodoItemCollection.where({todoId : todoId, completed : true});
 			console.log("full length: " + itemarray.length + " completed length: " + completedarray.length);
 			console.log(itemarray);
+			
 			if(itemarray.length === completedarray.length && this.model.get("completed") === false && itemarray.length > 0){
 				console.log("Waiting");
 
@@ -473,6 +481,13 @@ $(document).ready(function() {
 				}
 
 			}
+			else
+			{
+				this.model.save({checking : false});
+				myInputDiv.finishBtnRemove();
+				//this.makeList;
+			}
+
 		},
 
 		completeList: function(){
